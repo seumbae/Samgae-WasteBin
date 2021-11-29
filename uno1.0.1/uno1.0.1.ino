@@ -30,6 +30,8 @@ void tempToMcu(){
  
   temp = DS18B20_Sensor.getTempC();
   data["temp"] = temp;
+  //test
+  data["weight"] = 10;
   data.printTo(mcu);
   Serial.println(temp);
   jsonBuffer.clear();

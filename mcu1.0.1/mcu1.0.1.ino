@@ -15,6 +15,7 @@ const char* flag;
 float temp;
 int motorCycle = 30; //Default 30min
 String response;
+int weight;
 
 void setup() {
   Serial.begin(115200);
@@ -43,12 +44,14 @@ void setup() {
   //getDataFromMobius();
   //servoFlag();
   //WriteTempData();
-  
+  getDataFromUno();
 }
  
 void loop() {
-  getDataFromUno();
-  getDataFromMobius(); 
+  //getDataFromUno();
+  //getDataFromMobius();
+  WriteTempData();
+  delay(3000);
 }
 
 void getDataFromUno(){
@@ -57,7 +60,10 @@ void getDataFromUno(){
 
     Serial.print("Recieved temp: ");
     temp = data["temp"];
+    weight = data["weight"];
     Serial.println(temp);
+    Serial.print("Recieved weight: ");
+    Serial.println(weight);
     delay(2000);
 }
 void runServo(){
@@ -103,7 +109,7 @@ void runServo(){
 
 void WriteTempData(){
   HTTPClient http;
-  http.begin(client,"http://121.191.167.72:7579/Mobius/test/tempData");
+  http.begin(client,"http://121.191.167.72:7579/Mobius/test_ae1/ss");
 
   http.addHeader("Accept","application/json");
   http.addHeader("X-M2M-RI", "12345");
@@ -112,8 +118,10 @@ void WriteTempData(){
 
   //temp = getTempFromUno();
   String body = "{\"m2m:cin\": {\"con\": \"" + (String)temp + "\"}}";
-  
   int httpCode = http.POST(body);
+  Serial.println(httpCode);
+  body = "{\"m2m:cin\": {\"con\": \"" + (String)weight + "\"}}";
+  httpCode = http.POST(body);
 
   Serial.println(httpCode);
   http.end();

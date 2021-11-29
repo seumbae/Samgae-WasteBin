@@ -1,7 +1,7 @@
 #include<OneWire.h>
 #include<DS18B20.h>
 
-DS18B20 DS18B20_Sensor(2);
+DS18B20 DS18B20_Sensor(7);
 
 void setup() {
   Serial.begin(9600);
