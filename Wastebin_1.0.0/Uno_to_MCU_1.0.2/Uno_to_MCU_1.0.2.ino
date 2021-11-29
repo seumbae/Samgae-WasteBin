@@ -73,6 +73,7 @@ void GetFromMCU(){
 }
 
 void loop() {
+  runPIRServo();
   sensorVal = tempSensor.getTempC();
   uno.println(sensorVal + '\n');
   Serial.println(sensorVal + '\n');
@@ -82,9 +83,9 @@ void loop() {
   Serial.println(scaleVal + '\n');
 
   GetFromMCU();
-  runPIRServo();
-
-  delay(2000);
+  runPIRServo(); //delay때문에 두개 넣어놨음
+  delay(1000);
+  
 }
 
 void runPIRServo(){
